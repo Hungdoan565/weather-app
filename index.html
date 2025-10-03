@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dự báo Thời tiết - WeatherPro</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="weather-background" id="weatherBg">
+        <div class="clouds-layer"></div>
+        <div class="particles" id="particles"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-cloud-sun"></i>
+                <h1>WeatherPro</h1>
+            </div>
+            <div class="header-controls">
+                <button class="btn-icon" id="unitToggle" title="Chuyển đổi C°/F°">
+                    <i class="fas fa-thermometer-half"></i>
+                    <span id="unitText">°C</span>
+                </button>
+                <button class="btn-icon" id="locationBtn" title="Vị trí hiện tại">
+                    <i class="fas fa-location-crosshairs"></i>
+                </button>
+                <button class="btn-icon" id="themeToggle" title="Chuyển chế độ sáng/tối">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Search Section -->
+        <section class="search-section">
+            <div class="search-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        placeholder="Tìm kiếm thành phố, địa điểm..."
+                        autocomplete="off"
+                    >
+                    <button class="clear-btn" id="clearBtn">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="search-suggestions" id="suggestions"></div>
+            </div>
+            
+            <!-- Search Hints -->
+            <div class="search-hints">
+                <div class="hint-header">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>Thành phố có sẵn:</span>
+                </div>
+                <div class="hint-cities">
+                    <span class="hint-city" data-city="Hà Nội">Hà Nội</span>
+                    <span class="hint-city" data-city="Hồ Chí Minh">TP.HCM</span>
+                    <span class="hint-city" data-city="Đà Nẵng">Đà Nẵng</span>
+                    <span class="hint-city" data-city="Cần Thơ">Cần Thơ</span>
+                    <span class="hint-city" data-city="Nha Trang">Nha Trang</span>
+                    <span class="hint-city" data-city="Đà Lạt">Đà Lạt</span>
+                    <span class="hint-city" data-city="Vũng Tàu">Vũng Tàu</span>
+                    <span class="hint-city" data-city="Huế">Huế</span>
+                </div>
+            </div>
+            
+            <!-- Recent Searches -->
+            <div class="recent-searches" id="recentSearches" style="display: none;">
+                <h3>Tìm kiếm gần đây</h3>
+                <div class="recent-items" id="recentItems"></div>
+            </div>
+        </section>
+
+        <!-- Current Weather Section -->
+        <section class="current-weather" id="currentWeather">
+            <div class="loading-spinner" id="loadingSpinner">
+                <div class="spinner"></div>
+                <p>Đang tải dữ liệu...</p>
+            </div>
+
+            <div class="weather-content" id="weatherContent" style="display: none;">
+                <!-- Location Info -->
+                <div class="location-info">
+                    <h2 id="cityName">Hà Nội</h2>
+                    <p id="locationDetails">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span id="country">Vietnam</span>
+                    </p>
+                    <p class="last-updated">
+                        <i class="fas fa-clock"></i>
+                        Cập nhật: <span id="lastUpdated">--:--</span>
+                    </p>
+                </div>
+
+                <!-- Main Weather Display -->
+                <div class="main-weather">
+                    <div class="temperature-section">
+                        <div class="temp-main">
+                            <span class="temperature" id="temperature">--</span>
+                            <span class="unit">°C</span>
+                        </div>
+                        <div class="feels-like">
+                            Cảm giác như <span id="feelsLike">--</span>°
+                        </div>
+                    </div>
+
+                    <div class="weather-icon-section">
+                        <div class="weather-icon animated" id="weatherIcon">
+                            <i class="fas fa-cloud-sun fa-5x"></i>
+                        </div>
+                        <p class="weather-description" id="weatherDescription">--</p>
+                    </div>
+                </div>
+
+                <!-- Weather Details Grid -->
+                <div class="weather-details-grid">
+                    <div class="detail-card">
+                        <div class="detail-icon">
+                            <i class="fas fa-wind"></i>
+                        </div>
+                        <div class="detail-info">
+                            <p class="detail-label">Tốc độ gió</p>
+                            <p class="detail-value" id="windSpeed">-- km/h</p>
+                            <p class="detail-extra" id="windDirection">--</p>
+                        </div>
+                    </div>
+
+                    <div class="detail-card">
+                        <div class="detail-icon">
+                            <i class="fas fa-droplet"></i>
+                        </div>
+                        <div class="detail-info">
+                            <p class="detail-label">Độ ẩm</p>
+                            <p class="detail-value" id="humidity">--%</p>
+                            <div class="humidity-bar">
+                                <div class="humidity-fill" id="humidityBar"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="detail-card">
+                        <div class="detail-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <div class="detail-info">
+                            <p class="detail-label">Tầm nhìn</p>
+                            <p class="detail-value" id="visibility">-- km</p>
+                        </div>
+                    </div>
+
+                    <div class="detail-card">
+                        <div class="detail-icon">
+                            <i class="fas fa-gauge"></i>
+                        </div>
+                        <div class="detail-info">
+                            <p class="detail-label">Áp suất</p>
+                            <p class="detail-value" id="pressure">-- hPa</p>
+                        </div>
+                    </div>
+
+                    <div class="detail-card">
+                        <div class="detail-icon">
+                            <i class="fas fa-sun"></i>
+                        </div>
+                        <div class="detail-info">
+                            <p class="detail-label">Chỉ số UV</p>
+                            <p class="detail-value">
+                                <span id="uvIndex">--</span>
+                                <span class="uv-level" id="uvLevel"></span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="detail-card">
+                        <div class="detail-icon">
+                            <i class="fas fa-cloud-rain"></i>
+                        </div>
+                        <div class="detail-info">
+                            <p class="detail-label">Lượng mưa</p>
+                            <p class="detail-value" id="precipitation">-- mm</p>
+                        </div>
+                    </div>
+
+                    <div class="detail-card">
+                        <div class="detail-icon">
+                            <i class="fas fa-sunrise"></i>
+                        </div>
+                        <div class="detail-info">
+                            <p class="detail-label">Bình minh</p>
+                            <p class="detail-value" id="sunrise">--:--</p>
+                        </div>
+                    </div>
+
+                    <div class="detail-card">
+                        <div class="detail-icon">
+                            <i class="fas fa-sunset"></i>
+                        </div>
+                        <div class="detail-info">
+                            <p class="detail-label">Hoàng hôn</p>
+                            <p class="detail-value" id="sunset">--:--</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hourly Forecast -->
+        <section class="hourly-forecast">
+            <div class="section-header">
+                <h2>
+                    <i class="fas fa-clock"></i>
+                    Dự báo theo giờ
+                </h2>
+            </div>
+            <div class="hourly-scroll" id="hourlyForecast">
+                <!-- Hourly items will be dynamically added -->
+            </div>
+        </section>
+
+        <!-- Daily Forecast -->
+        <section class="daily-forecast">
+            <div class="section-header">
+                <h2>
+                    <i class="fas fa-calendar-week"></i>
+                    Dự báo 5 ngày
+                </h2>
+                <button class="btn-view-more" id="viewMoreBtn">
+                    Xem chi tiết <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+            <div class="daily-cards" id="dailyForecast">
+                <!-- Daily cards will be dynamically added -->
+            </div>
+        </section>
+
+        <!-- Air Quality Section -->
+        <section class="air-quality">
+            <div class="section-header">
+                <h2>
+                    <i class="fas fa-lungs"></i>
+                    Chất lượng không khí
+                </h2>
+            </div>
+            <div class="aqi-container" id="airQuality">
+                <div class="aqi-main">
+                    <div class="aqi-value" id="aqiValue">--</div>
+                    <div class="aqi-status" id="aqiStatus">--</div>
+                </div>
+                <div class="aqi-details">
+                    <div class="aqi-item">
+                        <span class="aqi-label">PM2.5</span>
+                        <span class="aqi-amount" id="pm25">--</span>
+                    </div>
+                    <div class="aqi-item">
+                        <span class="aqi-label">PM10</span>
+                        <span class="aqi-amount" id="pm10">--</span>
+                    </div>
+                    <div class="aqi-item">
+                        <span class="aqi-label">O₃</span>
+                        <span class="aqi-amount" id="o3">--</span>
+                    </div>
+                    <div class="aqi-item">
+                        <span class="aqi-label">NO₂</span>
+                        <span class="aqi-amount" id="no2">--</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Weather Map -->
+        <section class="weather-map">
+            <div class="section-header">
+                <h2>
+                    <i class="fas fa-map-marked-alt"></i>
+                    Bản đồ vị trí
+                </h2>
+                <p class="map-subtitle">Định vị thành phố đang xem dự báo</p>
+            </div>
+            <div class="map-container" id="weatherMap">
+                <div class="map-placeholder">
+                    <i class="fas fa-map-location-dot fa-3x"></i>
+                    <p>Bản đồ đang tải...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p>© 2025 WeatherPro - Ứng dụng Dự báo Thời tiết Chuyên nghiệp</p>
+                <p class="api-credit">Dữ liệu từ AccuWeather API | Phát triển bởi Đoàn Vĩnh Hưng</p>
+                <div class="social-links">
+                    <a href="https://github.com/Hungdoan565/weather-app" target="_blank" title="GitHub Repository">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="mailto:hungmobile457@gmail.com" title="Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                    <a href="https://github.com/Hungdoan565" target="_blank" title="GitHub Profile">
+                        <i class="fab fa-github-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="fas fa-info-circle"></i>
+        <span id="toastMessage"></span>
+    </div>
+
+    <!-- Modal for Detailed Forecast -->
+    <div class="modal" id="detailModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Chi tiết dự báo</h2>
+                <button class="modal-close" id="modalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Modal content will be dynamically added -->
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
