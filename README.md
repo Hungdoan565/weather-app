@@ -1,206 +1,106 @@
-# 🌦️ WeatherPro - Professional Weather Application
+# SkycastVN 🌤️
 
-Ứng dụng dự báo thời tiết chuyên nghiệp với giao diện hiện đại, tích hợp AccuWeather API và bản đồ thời tiết tương tác.
+## Tổng quan
 
-![Weather App](https://img.shields.io/badge/Version-1.0.0-blue.svg)
-![License](https://img.shields.io/badge/License-MIT-green.svg)
-![Status](https://img.shields.io/badge/Status-Production%20Ready-success.svg)
+SkycastVN là ứng dụng dự báo thời tiết hiện đại, thân thiện và dễ sử dụng, được thiết kế đặc biệt cho người Việt Nam. Ứng dụng cung cấp thông tin thời tiết chính xác và cập nhật liên tục cho các thành phố lớn ở Việt Nam và một số địa điểm quốc tế, kèm theo các tính năng tìm kiếm thông minh, định vị thủ công và bản đồ tương tác.
 
-## ✨ Tính năng chính
+🌐 **Truy cập trực tiếp:** [skycast-vn.netlify.app](https://skycast-vn.netlify.app/)
 
-### 🎨 Giao diện & UX
-- ✅ **Dark/Light Mode** - Chuyển đổi theme linh hoạt
-- ✅ **Dynamic Background** - Background thay đổi theo điều kiện thời tiết
-- ✅ **Smooth Animations** - Hiệu ứng chuyển động mượt mà
-- ✅ **Fully Responsive** - Tối ưu cho mọi thiết bị (Desktop, Tablet, Mobile)
-- ✅ **Glass Morphism Design** - Thiết kế hiện đại với hiệu ứng kính mờ
+---
 
-### 🔍 Tìm kiếm & Navigation
-- ✅ **Smart Search với Autocomplete** - Tìm kiếm thành phố thông minh
-- ✅ **Recent Searches** - Lưu 5 địa điểm tìm kiếm gần nhất
-- ✅ **Geolocation** - Tự động lấy vị trí hiện tại
-- ✅ **Debounced Search** - Tối ưu hiệu suất tìm kiếm
+## Tính năng nổi bật
 
-### 🌡️ Thông tin thời tiết đầy đủ
-- ✅ **Nhiệt độ hiện tại & cảm giác thực**
-- ✅ **Tốc độ gió & hướng gió** (8 hướng chi tiết)
-- ✅ **Độ ẩm** với thanh tiến trình trực quan
-- ✅ **Tầm nhìn & Áp suất khí quyển**
-- ✅ **Chỉ số UV** với màu cảnh báo theo cấp độ
-- ✅ **Lượng mưa**
-- ✅ **Giờ bình minh & hoàng hôn**
+- **Tìm kiếm thông minh với Autocomplete:**  
+  Tìm kiếm thành phố theo tên, quốc gia hoặc vùng miền. Hỗ trợ tìm kiếm các tỉnh thành Việt Nam được ánh xạ đến các thành phố lớn gần nhất.
 
-### 📊 Dự báo chi tiết
-- ✅ **Dự báo theo giờ** - 24 giờ tiếp theo
-- ✅ **Dự báo 5 ngày** - Nhiệt độ cao/thấp, tình trạng, khả năng mưa
-- ✅ **Chất lượng không khí** - AQI, PM2.5, PM10, O₃, NO₂
+- **Danh sách thành phố đã xác thực:**  
+  Bao gồm 10 thành phố phổ biến của Việt Nam và 6 thành phố quốc tế, đảm bảo kết quả ổn định và đáng tin cậy với dữ liệu API thực tế.
 
-### 🗺️ Bản đồ thời tiết tương tác
-- ✅ **Interactive Map** - Bản đồ với Leaflet.js
-- ✅ **4 Weather Layers**:
-  - 🌡️ Nhiệt độ
-  - 🌧️ Lượng mưa
-  - 💨 Gió
-  - ☁️ Mây
+- **Định vị thủ công:**  
+  Người dùng có thể chủ động kích hoạt định vị để xác định vị trí hiện tại trên bản đồ và nhận thông tin thời tiết của thành phố gần nhất mà không bị làm phiền bởi các quyền tự động.
 
-### ⚙️ Tính năng tiện ích
-- ✅ **Unit Conversion** - Chuyển đổi °C/°F tức thì
-- ✅ **Toast Notifications** - Thông báo thân thiện
-- ✅ **Modal Details** - Xem thông tin chi tiết
-- ✅ **LocalStorage** - Lưu theme & lịch sử tìm kiếm
+- **Bản đồ tương tác:**  
+  Sậ dụng Leaflet.js với các tile của OpenStreetMap cho việc làm bản đồ tương tác. Có các marker tùy chỉnh đánh dấu các vị trí quan tâm mà không phụ thuộc vào nhiều API tile thời tiết khác nhau.
 
-## 🚀 Cài đặt & Sử dụng
+- **Giao diện sạch đẹp và responsive:**  
+  Giao diện hiện đại với gợi ý tìm kiếm, thông báo toast, xử lý lỗi và trạng thái loading mượt mà. Hoàn toàn responsive và hỗ trợ chế độ sáng/tối linh hoạt.
 
-### Prerequisites
-- Trình duyệt web hiện đại (Chrome, Firefox, Safari, Edge)
-- Kết nối internet
-- API Key từ AccuWeather (tùy chọn - có chế độ demo)
+- **Chế độ Demo và API thật:**  
+  - Chế độ demo sử dụng dữ liệu giả lập đã được xác thực cho việc test và demo.  
+  - Chế độ API thật lấy dữ liệu thời tiết trực tiếp từ AccuWeather API cho việc sử dụng thực tế.
 
-### Bước 1: Clone hoặc Download
-```bash
-git clone https://github.com/Hungdoan565/weather-app.git
-cd weather-app
-```
+---
 
-### Bước 2: Mở ứng dụng
-**Cách 1: Mở trực tiếp**
-```bash
-# Windows
-start index.html
+## Công nghệ sử dụng
 
-# macOS
-open index.html
+- **Frontend:** JavaScript thuần, HTML5, CSS3  
+- **Bản đồ:** Leaflet.js + OpenStreetMap (miễn phí và mã nguồn mở)  
+- **Dữ liệu thời tiết:** AccuWeather API - nhà cung cấp dữ liệu thời tiết thực tế  
+- **Công cụ build:** Không cần (dự án vanilla JS để đơn giản và dễ chuyển đổi)
 
-# Linux
-xdg-open index.html
-```
+---
 
-**Cách 2: Sử dụng Live Server (Khuyến nghị)**
-- Cài đặt [Live Server extension](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) cho VS Code
-- Right-click vào `index.html` → "Open with Live Server"
+## Cách sử dụng
 
-**Cách 3: Python HTTP Server**
-```bash
-# Python 3
-python -m http.server 8000
+1. **Tìm kiếm thành phố:**  
+   Bắt đầu nhập tên thành phố hoặc tỉnh thành vào ô tìm kiếm để xem các gợi ý autocomplete ưu tiên cho các vị trí Việt Nam.
 
-# Sau đó mở: http://localhost:8000
-```
+2. **Định vị thủ công:**  
+   Nhấp vào nút vị trí để kích hoạt quyền định vị của trình duyệt. Ứng dụng sẽ hiển thị thành phố đã xác thực gần nhất với dữ liệu thời tiết của nó.
 
-### Bước 3: Cấu hình API (Tùy chọn)
+3. **Bản đồ tương tác:**  
+   Bản đồ cập nhật dựa trên thành phố hoặc vị trí được chọn, hiển thị marker với thông tin popup. Lớp nền bản đồ sử dụng các tile OpenStreetMap cho việc render nhanh và miễn phí.
 
-Ứng dụng hoạt động ở **chế độ demo** mặc định với dữ liệu mẫu. Để sử dụng dữ liệu thời tiết thật:
+4. **Hiển thị thời tiết:**  
+   Chi tiết thời tiết được hiển thị cho thành phố được chọn, bao gồm nhiệt độ, điều kiện và dự báo, sử dụng dữ liệu mock đã cache hoặc các cuộc gọi API trực tiếp tùy theo chế độ.
 
-#### 🔑 Lấy AccuWeather API Key
-1. Đăng ký tài khoản miễn phí tại: https://developer.accuweather.com/
-2. Tạo một App mới
-3. Copy API Key
+---
 
-#### 🔧 Cấu hình trong code
-Mở file `app.js` và chỉnh sửa:
+## Thành phố được hỗ trợ
 
-```javascript
-// Dòng 8: Thay YOUR_ACCUWEATHER_API_KEY bằng API key của bạn
-const CONFIG = {
-    API_KEY: 'your-actual-api-key-here',  // ← Thay đổi ở đây
-    API_BASE_URL: 'https://dataservice.accuweather.com',
-    // ...
-    USE_DEMO_MODE: false  // ← Đặt thành false để dùng API thật
-};
-```
+### Việt Nam (10 thành phố)
+- Hà Nội  
+- TP. Hồ Chí Minh (Sài Gòn)  
+- Cần Thơ  
+- Đà Nẵng  
+- Hải Phòng  
+- Nha Trang  
+- Vũng Tàu  
+- Đà Lạt  
+- Huế  
+- Quy Nhon  
 
-#### 🗺️ Cấu hình OpenWeatherMap (cho bản đồ thời tiết)
-1. Đăng ký miễn phí tại: https://openweathermap.org/api
-2. Lấy API Key
-3. Mở `app.js`, tìm dòng 322 và thay:
+### Quốc tế (6 thành phố)
+- Bangkok  
+- Tokyo  
+- Seoul  
+- Singapore  
+- New York  
+- London  
 
-```javascript
-const OWM_API_KEY = 'your-openweathermap-api-key';  // ← Thay đổi ở đây
-```
+---
 
-> **Lưu ý:** Bạn có thể bỏ qua OpenWeatherMap nếu không cần bản đồ. Ứng dụng vẫn hoạt động bình thường.
+## Tại sao chọn dự án này?
 
-## 📁 Cấu trúc dự án
+- **Giữ cho trải nghiệm người dùng đơn giản và đáng tin cậy** bằng cách chỉ sử dụng một API thời tiết duy nhất (AccuWeather).  
+- **Tránh sự phức tạp và phụ thuộc** vào nhiều API cho các tile bản đồ và lớp phủ thời tiết.  
+- **Quyền định vị thủ công** tôn trọng quyền riêng tư và quyền kiểm soát của người dùng.  
+- **Cung cấp dữ liệu thực tế** khớp với API sản xuất để tránh nhầm lẫn giữa chế độ demo và trực tiếp.  
+- **Công nghệ stack đơn giản** cho phép tùy chỉnh và bảo trì dễ dàng.
 
-```
-weather-app/
-├── index.html          # Cấu trúc HTML chính
-├── styles.css          # CSS với animations & responsive design  
-├── app.js              # JavaScript application logic
-└── README.md           # Tài liệu này
-```
+---
 
-## 🎯 Kiến trúc code (Senior Level)
+## Đóng góp & Giấy phép
 
-### Design Patterns
-- **MVC Pattern** - Model-View-Controller architecture
-- **State Management** - Centralized state với WeatherState class
-- **Service Layer** - API logic riêng biệt trong WeatherAPI class
-- **UI Controller** - UIController chuyên xử lý DOM
-- **Utility Classes** - WeatherUtils cho conversions & formatting
+SkycastVN là dự án mã nguồn mở dành cho mục đích giáo dục và cộng đồng. Chào đón các đóng góp qua GitHub. Được cấp phép dưới giấy phép MIT.
 
-### Code Organization
-```javascript
-// 1. Configuration
-CONFIG                    // App configuration
+---
 
-// 2. State Management
-WeatherState             // Quản lý state & localStorage
+*Phát triển bởi Đoàn Vĩnh Hưng*  
+GitHub: https://github.com/Hungdoan565  
+Email: hungmobile457@gmail.com
 
-// 3. API Service
-WeatherAPI               // Xử lý API calls với caching
-
-// 4. Map Controller
-WeatherMapController     // Quản lý Leaflet map & layers
-
-// 5. Utility Functions
-WeatherUtils             // Conversions, formatting, icon mapping
-
-// 6. UI Controller
-UIController             // DOM manipulation & event handling
-
-// 7. Main App
-WeatherApp               // Điều phối toàn bộ app
-```
-
-### Tính năng kỹ thuật
-- ✅ **Debouncing** - Tối ưu hiệu suất search
-- ✅ **Caching** - Cache API responses (10 phút)
-- ✅ **Error Handling** - Graceful fallback to demo data
-- ✅ **LocalStorage** - Lưu theme & lịch sử tìm kiếm
-- ✅ **Async/Await** - Modern async operations
-- ✅ **Promise.all** - Parallel API calls
-- ✅ **ES6+ Syntax** - Arrow functions, classes, destructuring
-- ✅ **Icon Mapping** - 44 weather conditions to Font Awesome icons
-- ✅ **Unit Conversion** - Real-time C°/F° conversion
-
-## 🎨 Customization
-
-### Thay đổi màu sắc
-Mở `styles.css` và chỉnh sửa CSS variables:
-
-```css
-:root {
-    --primary-color: #667eea;      /* Màu chính */
-    --secondary-color: #764ba2;    /* Màu phụ */
-    --accent-color: #f093fb;       /* Màu nhấn */
-    /* ... */
-}
-```
-
-### Thêm ngôn ngữ
-Trong `app.js`, tìm các hàm format và thay đổi locale:
-
-```javascript
-// Ví dụ: từ 'vi-VN' sang 'en-US'
-date.toLocaleDateString('en-US', { ... });
-```
-
-### Thay đổi đơn vị mặc định
-```javascript
-// Trong WeatherState constructor (dòng 27)
-this.unit = 'imperial';  // Thay vì 'metric'
-```
+---
 
 ## 🐛 Troubleshooting
 
